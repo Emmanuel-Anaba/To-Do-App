@@ -5,7 +5,7 @@ let itemsArray = JSON.parse(localStorage.getItem("items")) || [];
 itemsArray.forEach(addTask);
 
 function addRemoveBtn(list) {
-  let span = document.createElement("span");
+  let div = document.createElement("div");
   let deleteBtn = document.createElement("button");
   let checkBox = document.createElement("input");
   checkBox.type = "checkbox";
@@ -27,9 +27,9 @@ function addRemoveBtn(list) {
       div.firstChild.classList.remove("text-emerald-500");
     }
   });
-  span.appendChild(deleteBtn);
-  span.appendChild(checkBox);
-  list.appendChild(span);
+  div.appendChild(deleteBtn);
+  div.appendChild(checkBox);
+  list.appendChild(div);
 }
 
 function addTask(text) {

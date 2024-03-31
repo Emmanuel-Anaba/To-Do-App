@@ -7,16 +7,16 @@
     @apply rounded-md border-2 border-emerald-200 text-base;
   }
   li {
-    @apply bg-emerald-800 p-2 m-2 rounded-md justify-between items-center break-words grid grid-cols-5;
+    @apply bg-emerald-800 p-2 m-2 rounded-md justify-between items-center md:gap-10 break-words grid grid-cols-5;
   }
   li p {
-    @apply break-words col-span-3;
+    @apply break-words col-span-4;
   }
   li button {
     @apply px-5 py-[0.125rem];
   }
-  span {
-    @apply text-xl cursor-pointer flex gap-3 justify-end;
+  li div {
+    @apply text-xl cursor-pointer flex gap-3 justify-end w-[100%];
   }
   ::-webkit-scrollbar {
     @apply w-2;
