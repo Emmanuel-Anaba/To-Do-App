@@ -4,49 +4,47 @@ let itemsArray = JSON.parse(localStorage.getItem("items")) || [];
 
 itemsArray.forEach(addTask);
 
-function addRemoveBtn(list) {
-  let div = document.createElement("div");
-  let deleteBtn = document.createElement("button");
-  let checkBox = document.createElement("input");
-  checkBox.type = "checkbox";
-  deleteBtn.textContent = "Delete";
-  deleteBtn.addEventListener("click", () => {
-    let div = deleteBtn.parentElement.parentElement.textContent;
-    let i = itemsArray.indexOf(div.slice(0, div.length - 6));
-    deleteBtn.parentElement.parentElement.style.display = "none";
-    itemsArray.splice(i, 1);
-    localStorage.setItem("items", JSON.stringify(itemsArray));
-  });
-  checkBox.addEventListener("change", function () {
-    let div = checkBox.parentElement.parentElement;
-    if (this.checked) {
-      div.firstChild.style.textDecoration = "line-through";
-      div.firstChild.classList.add("text-emerald-500");
-    } else {
-      div.firstChild.style.textDecoration = "none";
-      div.firstChild.classList.remove("text-emerald-500");
-    }
-  });
-  div.appendChild(deleteBtn);
-  div.appendChild(checkBox);
-  list.appendChild(div);
-}
-
 function addTask(text) {
   const li = document.createElement("li");
-  let p = document.createElement("p");
-  let s = document.createTextNode(text);
-  p.appendChild(s);
+  const div = document.createElement("div");
+  const p = document.createElement("p");
+  const textNode = document.createTextNode(text);
+  const deleteBtn = document.createElement("button");
+  const checkBox = document.createElement("input");
+  checkBox.type = "checkbox";
+  deleteBtn.textContent = "Delete";
+
+  deleteBtn.addEventListener("click", function () {
+    const taskText =
+      this.parentElement.parentElement.querySelector("p").textContent;
+    const index = itemsArray.indexOf(taskText);
+    if (index !== -1) {
+      itemsArray.splice(index, 1);
+      localStorage.setItem("items", JSON.stringify(itemsArray));
+      this.parentElement.parentElement.remove();
+    }
+  });
+
+  checkBox.addEventListener("change", function () {
+    const p = this.parentElement.querySelector("p");
+    p.style.textDecoration = this.checked ? "line-through" : "none";
+    p.classList.toggle("text-emerald-500", this.checked);
+  });
+
+  p.appendChild(textNode);
+  div.appendChild(deleteBtn);
+  div.appendChild(checkBox);
   li.appendChild(p);
+  li.appendChild(div);
   ul.appendChild(li);
-  addRemoveBtn(li);
 }
 
 function add() {
-  if (input.value !== "") {
-    itemsArray.push(input.value);
+  const taskText = input.value.trim();
+  if (taskText !== "") {
+    itemsArray.push(taskText);
     localStorage.setItem("items", JSON.stringify(itemsArray));
-    addTask(input.value);
+    addTask(taskText);
     input.value = "";
   } else {
     alert("Write something!");
